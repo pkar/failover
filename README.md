@@ -1,43 +1,13 @@
 Failover processor
 ==================
 
-Go file processor that reads log files written in msgpack base64 encoded data.
-Use case is for instance failed request is written to log file for example when service is down and then resent when service is back up.
+Go file processor that reads log files written in json and base64 encoded data.
+Use case is for instance failed send request for example when a service is down, which is then resent when service is back up.
 
-Worker
-======
+Example
+=======
 
-Build:
-
-    cd go
-    GOPATH=$(pwd)
-    ./script/build.sh
-
-Usage examples:
-
-    go run failover.go
-
-Or:
-
-    ./failover_linux -env=production -applog=/var/log/app.log -errlog=$(pwd)/log/failover.log
-
-Options: 
-
-    -applog="": path to application logging(default STDOUT)
-    -debug=false: Send actual event or just mock if enabled
-    -env="development": development:testing:staging:sandbox:production
-    -errlog="failover.log": path to error logged files
-    -maxbytes=1048576: Maximum number of bytes before rotating
-    -maxprocessing=4: Maximum number of workers on rotated files
-    -syslog=false: log to syslog
-
-Testing:
-
-    cd go
-    GOPATH=$(pwd)
-    go test failover
-    go test client
-    go test utils 
+    go run examples/example.go
 
 Description
 ===========

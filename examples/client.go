@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
-	"github.com/ugorji/go-msgpack"
 	"log"
 	"os"
 )
@@ -15,13 +15,13 @@ func main() {
 	}
 	defer tmpFile.Close()
 
-	pack := map[int]bool{}
+	pack := map[string]int{}
 
 	for i := 0; i < 1000; i++ {
-		pack[i] = false
-		data, err := msgpack.Marshal(pack)
+		pack[fmt.Sprintf("%d", i)] = i
+		data, err := json.Marshal(pack)
 		if err != nil {
-			log.Fatalf("Could not msgpack")
+			log.Fatalf("Could not json encode %v", err)
 		}
 		line := base64.StdEncoding.EncodeToString(data)
 		tmpFile.WriteString(fmt.Sprintf("%s\n", line))
